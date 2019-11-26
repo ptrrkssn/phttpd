@@ -1,0 +1,30 @@
+close(22)                                       = 0
+close(49)                                       Err#9 EBADF
+close(61)                                       Err#9 EBADF
+close(40)                                       = 0
+close(53)                                       Err#9 EBADF
+close(75)                                       = 0
+close(92)                                       = 0
+close(74)                                       Err#9 EBADF
+close(37)                                       Err#9 EBADF
+close(70)                                       = 0
+write(6, " [ 1 4 / N o v / 1 9 9 8".., 162)     = 162
+close(16)                                       Err#9 EBADF
+open("/dev/zero", O_RDWR)                       = 16
+close(40)                                       Err#9 EBADF
+close(16)                                       = 0
+close(62)                                       Err#9 EBADF
+write(11, " 1 9 5 . 2 0 2 . 3 2 . 7".., 3639)   = 3639
+close(18)                                       = 0
+close(17)                                       Err#9 EBADF
+write(6, " [ 1 4 / N o v / 1 9 9 8".., 162)     = 162
+open("/dev/zero", O_RDWR)                       = 16
+write(6, " [ 1 4 / N o v / 1 9 9 8".., 113)     = 113
+close(16)                                       = 0
+write(6, " [ 1 4 / N o v / 1 9 9 8".., 153)     = 153
+open("/home/www/data/service/tickernews/ticker.conf", O_RDONLY) = 16
+close(113)                                      Err#9 EBADF
+close(22)                                       Err#9 EBADF
+
+
+

@@ -1,0 +1,156 @@
+API of phttpd 99.77c
+
+
+Init of a Module:
+
+* Read Config and set all 'module global/static' variables.
+
+	int pm_init(const char **argv)
+
+	Input:
+	argv[0] -- path/name of module (demo -- path/name of module e.g.: demo.so)
+
+	Return: 0    - success
+        	else - error
+
+
+Exit of a module:
+
+* Free all allocated memory, pm_init has loaded.
+
+	void pm_exit(void)
+	Return: 0    - success
+        	else - fail
+ 
+
+
+
+Handle a request:
+
+* phttpd will call this function based on the evaluation of 'url-handlers' in
+its configuration file.
+
+int pm_request(struct connectioninfo *cip)
+
+	Return: >= 0 (HTTP Result type e.g.: 200 etc... ) - success
+		else '-HTTP_ERROR_CODE',  - fail and let phttpd call its error handler !
+
+struct httpinfo
+{
+    char *method;
+    char *url;
+    char *orig_url;
+    char *request;
+    char *orig_request;
+    char *version;
+    int  prelen;
+    char *svsname;
+    int svstype;
+ 
+    struct mimeinfo *mip;
+    struct authinfo *aip;
+ 
+    /* Result Parameters */
+    int length;
+};
+
+struct connectioninfo
+{
+    mutex_t lock;
+    int inuse;
+ 
+    int request_no;
+    thread_t tid;
+    int fd;
+    int bytes;
+ 
+    dnsinfo_t *server;
+    dnsinfo_t *client;
+ 
+    time_t cn_time;
+ 
+    struct httpinfo *hip;
+    struct serverinfo *sip;
+ 
+    identinfo_t *ident;
+};
+
+struct mimeinfo
+{
+    int version;
+    hashtable_t table;
+    int headerbytes;
+ 
+    unsigned int connection_flags;
+    unsigned int pragma_flags;
+};
+
+struct authinfo
+{
+    char *type;         /* Authentication type (ie "basic") */
+    char *data;         /* Raw, undecoded, authentication data */
+ 
+    /* Type specific data */
+    union
+    {
+        /* Extracted data for the "basic" type of authentication stuff */
+        struct
+        {
+            char *username;
+            char *password;
+        } basic;
+    } u;
+ 
+ 
+ 
+    int   xtype;                /* Typ of data in "xinfo" */
+    void *xinfo;                /* For user-defined use */
+    void (*xfree)(void *);      /* For freeing the data in xinfo */
+ 
+    /* Called from the CGI module to export information */
+    void (*xsetenv)(void *xinfo,
+                    char *(*x_setenv)(char **, const char *, const char *),
+                    char **envp);
+ 
+ 
+    char *validated_username;
+};
+
+
+Global functions to call:
+
+
+extern int fd_flush(int fd);
+extern int fd_putc(int c, int fd);
+extern int fd_puts(const char *str, int fd);
+extern int fd_puti(int val, int fd);
+extern int fd_puts2nl(const char *s1, const char *s2, int fd);
+extern int fd_putsinl(const char *s1, int val, int fd);
+ 
+extern int fd_vprintf(int fd, const char *format, va_list ap);
+extern int fd_printf(int fd, const char *format, ...);
+ 
+extern int fd_getc(int fd);
+extern int fd_ungetc(int c, int fd);
+extern char *fd_gets(char *buf, int size, int fd);
+ 
+extern int fd_write(int fd, const char *buf, int len);
+extern int fd_read(int fd, char *buf, int len);
+ 
+extern int fd_relay(int fd1, int fd2, int bidir);
+extern int fd_nrelay(int fd1, int fd2, int bidir, int bytes);
+ 
+extern int fd_written(int fd);		 Returns number of bytes write fo fd
+ 
+extern int fd_avail(int fd);
+extern int fd_wait(int fd);
+ 
+
+(Global) Variables to set/use:
+
+	rkmultimode:		0 - OFF   1 - ON
+	softvirtserver:		0 - OFF   1 - ON
+
+	cip->hip->length:	Number of bytes send to output via Network
+
+

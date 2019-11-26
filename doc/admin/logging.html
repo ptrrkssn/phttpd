@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.03 [en] (X11; I; SunOS 5.5.1 sun4m) [Netscape]">
+   <TITLE>Phttpd: Logging
+</TITLE>
+</HEAD>
+<BODY>
+
+<CENTER>
+<H2>
+Logging data with Phttpd</H2></CENTER>
+Phttpd can maintain two log files, one is mainly for external use (the
+CERN Common Log compatible "requests" log file), whereas the other (the
+NDBM format "counting" log file(s)) is used for internal access (mainly
+by the <B>NCSA-HTML</B> modules).
+
+<P>Both are by default disabled, but can be enabled by specifying the paths
+to the log files in <B>phttpd.conf</B> or from the command line.
+
+<P>In case you are using some special features like "rkmultimode" or "software-virtual-servers"
+(HTTP/1.1),
+<BR>the common log is extended by some additional information.
+<BR>Every daemon does ONLY&nbsp;write ONE&nbsp;logfile, so in those multiservermodes,
+you need to write yourself tools
+<BR>to split the common log into the seperate logs for the differnet servers.
+
+<P>For account the server is also able to get all traffic, including incoming
+data and send mimeheaders. This
+<BR>options can be set in the main configuration file.
+</BODY>
+</HTML>

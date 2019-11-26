@@ -1,0 +1,15 @@
+mode extended: mind. 1 Zeichen in uid/gid feld noetig ???
+
+gc-time: BUG: Abbrueche bei grossen files, wenn gc-time = 120 !
+
+PATH_TRANSLATED is wrong, if to be translated is bin ist not in doc-root...
+
+Auth: Check module sys_passwd (with NIS) ?? (mobilcom.de bugs ?)
+
+Multimode-Errors:
+	Some kind of split, so that we will have a different errorpage for all users...
+
+Access:
+	Support of .htaccess ?
+
+Restart.....

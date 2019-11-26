@@ -1,0 +1,134 @@
+<HTML>
+<HEAD>
+<TITLE>
+Phttpd: CGI
+</TITLE>
+</HEAD>
+<BODY>
+<H2 ALIGN=CENTER>
+The CGI module
+</H2>
+
+This module enables the use of
+<A HREF="http://www.w3.org/hypertext/WWW/CGI/">
+CGI (Common Gateway Interface)
+</A>
+compliant programs and scripts to be executed.
+
+<H3>Example file (test.cgi)</H3>
+<PRE>
+	#!/bin/sh
+
+	echo "Content-Type: text/html"
+	echo ""
+	echo "Hello, World"
+
+	exit 0
+</PRE>
+
+<H3>System issues</H3>
+
+Causes the server to close Keep-Alive sockets after the file has been
+sent (since it can't depend on the "Content-Length" header being
+present and/or correct).
+
+<H3>Configuration options (cgi.conf)</H3>
+
+<DL>
+
+<DT><B>default-user</B> (string)
+<DD>The user name or number to run global CGI scripts as. Defaults to
+	user number -1 (normally "nobody"). Also sets the <B>default-group</B>
+	option to the group found in the Passwd database.
+
+<P><DT><B>default-group</B> (string)
+<DD>The group name or number to run global CGI scripts as. Defaults to
+	group number -1 (normally "nobody").
+
+<P><DT><B>allow-user-cgi</B> (boolean)
+<DD>If set to "false", will disable the possibilty for normal users
+	to have CGI scripts in their local home pages directory.
+
+<P><DT><B>path</B> (string)
+<DD>The PATH to use for CGI scripts. Defaults to "/bin:/usr/bin".
+
+</DL>
+
+<H3>Example configuration file</H3>
+<PRE>
+# cgi.conf
+ 
+#default-user = nobody
+#default-group = nobody
+ 
+### Set this to "no" to disable user CGI processes
+#allow-user-cgi = yes
+ 
+### Set this to "yes", to run scripts as auth user id
+# run-as-authuser = no
+ 
+### The default path for CGI processes
+# path = /bin:/usr/bin
+ 
+### By default, '/cgi-bin/*' is retrieved from the directory
+### database-dir/cgi-bin, where database-dir is taken from phttpd.conf.
+### By setting cgi-basedir to a path, this value will
+### replace the database-dir for the cgi's !
+### Remember not to put the 'cgi-bin' into this dir, since it comes
+### from the URL !
+# cgi-basedir =
+ 
+### In case of authentification, $HOME dir must match the URL.
+### See file.conf for more.
+###
+# exec-needs-homedir = 0
+ 
+### The maximum number of environment variables per CGI process
+# max-environ = 256
+ 
+### If >0 then limits the maximum number of concurrent CGI processes to
+### this number.
+# max-processes = 0
+ 
+### A colon-separated list of parent-process environment variables to
+### copy down to to CGI processes
+# copy-environ = LANG:LC_CTYPE 
+ 
+### Use the value on newroot for a chroot call befor the cgi-exec.
+### Default is not to do any chroot.
+# newroot = 
+ 
+### Since servers global DOCUMENT_ROOT will probalby be wrong for a chrooted 
+### cgi, you can for DOCUMENT_ROOT to a new value for the environment variable
+### DOCUMENT_ROOT of the cgi-process. Setting 'cgi-database-dir' will set
+### this value to DOCUMENT_ROOT IF newroot is used.
+# cgi-database-dir = 
+ 
+### Set a nicevalue for the CGI process
+### Default is to use servers nicevalue
+# nicevalue = 0
+ 
+### Set a max-cpu-time resource limit for the CGI process
+### Default is none set
+# maxcputime = 
+ 
+### Set a max-vmem resource limit for the CGI process
+### Default is none set, value is given in Byte.
+# max-vmem =
+ 
+### Set a max-fd resource limit for the CGI process
+### Default is none set.
+# max-fd =
+ 
+### Set environment variables through a table here. These values are set at the
+### end, thus they will override anything else.
+# set-environ = {
+#    VAR1                value1
+#    VAR2                value2
+#}
+
+</PRE>
+
+</BODY>
+</HTML>
+

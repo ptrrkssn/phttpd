@@ -1,0 +1,3 @@
+LDAP support only works with Solaris 7, since it has build in ldap-support.
+To get the auth_ldap.so build, you need to edit src/modules/Makefile.
+

@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+<TITLE>
+Phttpd: ACL
+</TITLE>
+</HEAD>
+<BODY>
+<H2 ALIGN=CENTER>
+The ACL Handler (host-access)
+</H2>
+
+Phttpd has its own acl Handler.
+The mapping between acl-files and URL is done by the host-access table in
+the main configuration file. If the path to the acl-file is relative it
+is taken relative to the documents root. So the webmaster can grant the privilage 
+to maintain that file to the user, who is maintaining that part of the server.
+<P></P>
+<PRE>
+# phttpd.acl
+#
+# The format of this file is simple, first a "key" which can be
+# either "host" or "address", second is a pattern to match against
+# and the last entry is either "allow" or "reject" or "auth".
+# In case of auth, additional agruments are requiered: first a
+# Password-Source (same way as read-authenticate) and then
+# an (optional) Security-Realm.
+#
+# Currently only the "address" information is available inside the
+# server so you can't use the "host" key for anything useful.
+ 
+host            laphroaig.*             allow
+ 
+address         130.236.160.9           reject
+address         130.236.160.*           allow
+address         130.236.*               reject
+address         193.98.110.*            auth    File1   Realm
+host		*			reject
+</PRE>
+The argument 'File1' in an auth statement refers to the mapping of the auth-handler-table in the  main configuration file.
+Using this mechanism you can get the same results as with ".htaccess" files of
+other WWW-servers.
+</BODY>
+</HTML>
+
